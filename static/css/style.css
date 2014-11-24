@@ -1,1 +1,10 @@
 /* CSS Styles */
+
+body {
+    background-color: #ccc;
+}
+
+#top_login {
+    margein: auto;
+    width: 300px;
+}

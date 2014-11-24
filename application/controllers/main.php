@@ -1,14 +1,26 @@
 <?php
 
-class Main extends Controller {
-    
-    function index()
+class Main extends Controller
+{
+    function __construct()
     {
-        $template = $this->loadView('main_view');
+        // parent::__construct();
+
+        if ( !empty($_SESSION) AND true === $_SESSION['login'] )
+        {
+            $this->redirect('diary/');
+            return true;
+        }
+
+    }
+    
+    public function index()
+    {
+        $template = $this->loadView('top');
         $template->render();
     }
     
-    function regist()
+    public function regist()
     {
         echo "a";
     }
