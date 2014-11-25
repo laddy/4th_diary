@@ -3,37 +3,32 @@
 class Auth extends Controller
 {
 
+    // Post Only
     public function login()
     {
-        $SESS = loadHelper('session_helper');
-        if ( empty($_POST) )
-        {
+        if ( empty($_POST) ) {
             exit();
         }
-
+        if ( !empty($_SESSION['login']) AND $_SESSION['login'] ) {
+            $this->redirect('diary/');
+        }
 
         $Auth  = $this->loadModel('auth_model');
         $login = $Auth->getAuthUser($_POST['username'], $_POST['password']);
 
-        var_dump($login);
-
-        exit();
-
-        if ( $login )
-        {
-            // $this->
+        if ( $login ) {
+            $this->redirect('/diary/');
+        }
+        else {
+            $this->redirect('/?login=fail');
         }
 
-        echo "login";
-
-        // $template = $this->loadView('main_view');
-        // $template->render();
+        return true;
     }
     
     public function logout()
     {
-        $SESS = loadHelper('session_helper');
-        $SESS->destroy();
+        session_destroy();
 
         $this->redirect('/');
         return true;

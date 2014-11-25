@@ -4,34 +4,27 @@ class Diary extends Controller
 {
     function __construct()
     {
-        parent::__construct();
+//        parent::__construct();
 
-        $SESS = loadHelper('session_helper');
+        $SESS = $this->loadHelper('session_helper');
         if ( !($SESS->get('login')) )
         {
             $this->redirect('/');
             return false;
         }
 
-        else
-        {
-            $this->redirect('diary/');
-        }
 
     }
-    
-    public function index()
-    {
-        echo "login ok";
-        /*
-        $diaryModel  = $this->loadModel('diary_model');
-        $diary = $this->
-        $template = $this->loadView('top');
-        */
 
+    public function index($hoge = 'hoge')
+    {
+        $diaryModel = $this->loadModel('diary_model');
+        $diary      = $diaryModel->getDiary('2014-11-01');
+
+        $template   = $this->loadView('diary_main');
         $template->render();
     }
-    
+
     public function regist()
     {
         echo "a";
