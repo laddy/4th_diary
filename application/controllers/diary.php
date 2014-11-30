@@ -1,5 +1,4 @@
 <?php
-
 class Diary extends Controller
 {
     function __construct()
@@ -16,13 +15,21 @@ class Diary extends Controller
 
     }
 
-    public function index($hoge = 'hoge')
+    public function index($month = '')
     {
+        $month      = !empty($month) ? $month : date('Y-m-d');
         $diaryModel = $this->loadModel('diary_model');
-        $diary      = $diaryModel->getDiary('2014-11-01');
-
+        $diary      = $diaryModel->getDiary($month);
         $template   = $this->loadView('diary_main');
+        $template->set('contents', $diary);
+        $template->set('month', $month);
+        $template->set('day', [0=>'月', 1=>'火',2=>'水', 3=>'木', 4=>'金', 5=>'土', 6=>'日']);
+
         $template->render();
+    }
+
+    public function write()
+    {
     }
 
     public function regist()

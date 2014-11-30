@@ -2,9 +2,19 @@
 
 body {
     background-color: #ccc;
+    margin-top: 40px;
 }
 
 #top_login {
     margein: auto;
     width: 300px;
+}
+
+.contents {
+    background-color: #fff;
+    padding: 20px;
+}
+
+table th {
+    width: 50px;
 }
