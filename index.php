@@ -4,8 +4,7 @@ require 'config.php';
 
 $app = new \Slim\Slim([
     'mode'        => 'development',
-    'debug'       => true
-//    'templates.path' => './templates'
+    'debug'       => $config['debug']
 ]);
 
 
@@ -29,5 +28,3 @@ $app->post('/hello/', function() {
 });
 
 $app->run();
-
-
