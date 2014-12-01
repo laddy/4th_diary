@@ -30,6 +30,7 @@ class Diary extends Controller
 
     public function write()
     {
+        echo $id = $this->escapeString('<>"&%!#$%&');
     }
 
     public function regist()

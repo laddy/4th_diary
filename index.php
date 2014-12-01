@@ -1,25 +1,33 @@
 <?php
-/*
- * PIP v0.5.3
- */
+require 'vendor/autoload.php';
+require 'config.php';
 
-//Start the Session
-session_start(); 
+$app = new \Slim\Slim([
+    'mode'        => 'development',
+    'debug'       => true
+//    'templates.path' => './templates'
+]);
 
-// Defines
-define('ROOT_DIR', realpath(dirname(__FILE__)) .'/');
-define('APP_DIR', ROOT_DIR .'application/');
 
-// Includes
-require(APP_DIR .'config/config.php');
-require(ROOT_DIR .'system/model.php');
-require(ROOT_DIR .'system/view.php');
-require(ROOT_DIR .'system/controller.php');
-require(ROOT_DIR .'system/pip.php');
+// Config
+$app->config([]);
 
-// Define base URL
-global $config;
-define('BASE_URL', $config['base_url']);
+$app->get('/', function() use($app) {
+    $app->render('top.php');
+});
 
-pip();
+$app->get('/hello/:name', function($name) {
+    echo "Hello, $name";
+});
+
+$app->get('/hello/', function() {
+    echo "Hello, World";
+});
+
+$app->post('/hello/', function() {
+
+});
+
+$app->run();
+
 
