@@ -20,7 +20,7 @@
 
 <div class="container">
 
-<form id="top_login" class="form-signin" role="form" method="POST" action="/rest.php/auth/login/">
+<form id="top_login" class="form-signin" role="form" method="POST" action="/auth/login/">
 <h2 class="form-signin-heading">Please Login</h2>
 <label for="inputEmail" class="sr-only">UserID</label>
 <input type="text" id="inputID" class="form-control" name="username" placeholder="UserId" required autofocus>
@@ -38,4 +38,3 @@
 
 </body>
 </html>
-

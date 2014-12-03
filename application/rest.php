@@ -5,7 +5,7 @@ function auth($post)
     $db = conn();
 
     if ( !empty($_SESSION['login']) AND $_SESSION['login'] ) {
-        $this->redirect('/diary.php/');
+        header('/diary/'.date('Y-m'));
     }
 
     $username  = htmlspecialchars($post['username']);
@@ -17,7 +17,6 @@ function auth($post)
     if ( !($fetch->execute()) ){
         return false;
     }
-
 
     $result = $fetch->fetch(PDO::FETCH_ASSOC);
 
