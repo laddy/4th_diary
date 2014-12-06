@@ -4,7 +4,7 @@ session_start();
 require 'vendor/autoload.php';
 require 'config.php';
 require 'application/common.php';
-require 'application/rest.php';
+require 'application/model_rest.php';
 
 $app = new \Slim\Slim([
     'mode'        => 'development',
@@ -20,61 +20,33 @@ $app->get('/', function() use($app) {
 });
 
 $app->post('/auth/login/', function() use($app) {
-
-    $login = auth($_POST);
-    if ( $login ) {
-        $app->redirect('/diary/'.date('Y-m'));
+    if ( auth($_POST) ) {
+        $app->redirect('/diary/');
     }
     else {
         $app->redirect('/?login=fail');
     }
-
 });
 
 
-$app->get('/diary/:date', function($target_date) use($app) {
-    $db = conn();
-    $target_date = empty($target_date) ? date('Y-m') : $target_date;
-    $user_hash   = hash_hmac( 'sha256', $_SESSION['username'], '4th_diary_key', false );
+$app->get('/diary/', function() use($app) {
 
-    $result = $db->query('SELECT * FROM contents WHERE user = "'.$user_hash.'"
-        AND target_date LIKE "' .substr($target_date, 0, 7).'%"
-        ORDER BY target_date DESC'
-    );
-    if ( !($result->execute()) ){
-        return false;
-    }
-
-    $contents = [];
-    while ( $c = $result->fetch(PDO::FETCH_ASSOC) ) {
-        $contents[] = $c;
-    }
-
-    $app->render('diaryMain.php',[
-        'month'    => $target_date,
+    $target_month = !empty($_POST['target_month']) ? htmlspecialchars($_POST['target_month']) : date('Y-m');
+    $contents     = getDiary($target_month);
+    $app->render('diaryMain.php');
+    /*
+    ,[
+        'month'    => $target_month,
         'contents' => $contents,
         'day'      => [0=>'月', 1=>'火', 2=>'水', 3=>'木', 4=>'金', 5=>'土', 6=>'日']
     ]);
+    */
 });
 
 $app->post('/get_diary/', function() {
 
-    $db = conn();
-    $target_date = empty($_POST['target_date']) ? date('Y-m') : date('Y-m', strtotime($_POST['target_date']));
-    $user_hash   = hash_hmac( 'sha256', $_SESSION['username'], '4th_diary_key', false );
-
-    $result = $db->query('SELECT * FROM contents WHERE user = "'.$user_hash.'"
-        AND target_date LIKE "' .substr($target_date, 0, 7).'%"
-        ORDER BY target_date DESC'
-    );
-    if ( !($result->execute()) ){
-        return false;
-    }
-
-    $contents = [];
-    while ( $c = $result->fetch(PDO::FETCH_ASSOC) ) {
-        $contents[] = $c;
-    }
+    $target_month = !empty($_POST['target_month']) ? htmlspecialchars($_POST['target_month']) : date('Y-m');
+    $contents     = getDiary($target_month);
 
     echo json_encode($contents);
 

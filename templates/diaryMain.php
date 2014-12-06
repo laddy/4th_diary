@@ -99,39 +99,31 @@
 
 <div class="contents">
 
-<h2><?=date('Y年m月', strtotime($month));?></h2>
+<div id="diary_space"></div>
 
-<? foreach ( $contents as $cont ) : ?>
-  <h3>
-      <?=date('j', strtotime($cont['target_date']));?>日
-      (<?=$day[(int)date('w', strtotime($cont['target_date']))];?>)
-  </h3>
 
-  <table class="table">
-    <tr>
-      <th>事実</th><td><?=$cont['cnt_fact'];?></td>
-    </tr>
-    <tr>
-      <th>発見</th><td><?=$cont['cnt_discover'];?></td>
-    </tr>
-    <tr>
-      <th>教訓</th><td><?=$cont['cnt_lesson'];?></td>
-    </tr>
-    <tr>
-      <th>宣言</th><td><?=$cont['cnt_declaration'];?></td>
-    </tr>
-  </table>
-<? endforeach; ?>
 </div><!-- /contents -->
 
 </div><!-- /container -->
 
 <script src="/static/js/jquery-2.1.1.min.js"></script>
-<script src="/static/js/underscore-min.js"></script>
+<script src="/static/js/mustache.min.js"></script>
 <script src="/static/dist/js/bootstrap.min.js"></script>
-<script src="/static/js/backbone-min.js"></script>
 <script src="/static/js/app.js"></script>
 
+<script id="diary_template" type="text/x-mustache-template">
+<h2>{{year}}年{{month}}月</h2>
+
+{{#diary}}
+<h3>{{day}}日 ({{js_day}})</h3>
+<table class="table">
+  <tr> <th>事実</th><td>{{cnt_fact}}</td> </tr>
+  <tr> <th>発見</th><td>{{cnt_discover}}</td> </tr>
+  <tr> <th>教訓</th><td>{{cnt_lesson}}</td> </tr>
+  <tr> <th>宣言</th><td>{{cnt_declaration}}</td> </tr>
+</table>
+{{/diary}}
+</script>
 
 </body>
 </html>
