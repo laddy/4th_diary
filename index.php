@@ -58,8 +58,7 @@ $app->post('/getDayDiary/', function() {
  * Write Data
  */
 $app->post('/write/', function() use($app) {
-    var_dump($_POST);
-    writeDiary('');
+    echo json_encode(writeDiary($_POST));
 });
 
 $app->run();

@@ -88,6 +88,7 @@ function getDayDiary()
 
     $temp = $result->fetch(PDO::FETCH_ASSOC);
     $res = [
+        'id'          => $temp['id'],
         'fact'        => $temp['cnt_fact'],
         'discover'    => $temp['cnt_discover'],
         'lesson'      => $temp['cnt_lesson'],
@@ -99,6 +100,15 @@ function getDayDiary()
 
 function writeDiary($post)
 {
+    var_dump($post);
+    /*
+    ["selectDate"]
+    ["fact"]
+    ["discover"]
+    ["lesson"]
+    ["declaration"]
+    */
+
     return '';
 }
 
