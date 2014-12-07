@@ -68,3 +68,37 @@ function getDiary($target_month)
 
     return $res;
 }
+
+
+function getDayDiary()
+{
+    if ( empty($_SESSION['username']) ) {
+        return false;
+    }
+
+    $db          = conn();
+    $user_hash   = hash_hmac( 'sha256', $_SESSION['username'], '4th_diary_key', false );
+
+    $result = $db->query('SELECT * FROM contents WHERE user = "'.$user_hash.'"
+        AND target_date LIKE "' . $_POST['edit_date']. '"');
+
+    if ( !($result->execute()) ){
+        return false;
+    }
+
+    $temp = $result->fetch(PDO::FETCH_ASSOC);
+    $res = [
+        'fact'        => $temp['cnt_fact'],
+        'discover'    => $temp['cnt_discover'],
+        'lesson'      => $temp['cnt_lesson'],
+        'declaration' => $temp['cnt_declaration']
+    ];
+
+    return $res;
+}
+
+function writeDiary($post)
+{
+    return '';
+}
+

@@ -29,34 +29,37 @@ $app->post('/auth/login/', function() use($app) {
 });
 
 
+// Diary初期表示
 $app->get('/diary/', function() use($app) {
-
     $target_month = !empty($_POST['target_month']) ? htmlspecialchars($_POST['target_month']) : date('Y-m');
     $contents     = getDiary($target_month);
     $app->render('diaryMain.php');
-    /*
-    ,[
-        'month'    => $target_month,
-        'contents' => $contents,
-        'day'      => [0=>'月', 1=>'火', 2=>'水', 3=>'木', 4=>'金', 5=>'土', 6=>'日']
-    ]);
-    */
 });
 
+/*
+ * data
+ * return json
+ */
 $app->post('/get_diary/', function() {
-
     $target_month = !empty($_POST['target_month']) ? htmlspecialchars($_POST['target_month']) : date('Y-m');
     $contents     = getDiary($target_month);
-
     echo json_encode($contents);
+});
+
 
 /*
-    $app->render('diaryMain.php',[
-        'month'    => $target_date,
-        'contents' => $contents,
-        'day'      => [0=>'月', 1=>'火', 2=>'水', 3=>'木', 4=>'金', 5=>'土', 6=>'日']
-    ]);
-    */
+ * GetDayDiary
+ */
+$app->post('/getDayDiary/', function() {
+    $contents = getDayDiary();
+    echo json_encode($contents);
+});
+/*
+ * Write Data
+ */
+$app->post('/write/', function() use($app) {
+    var_dump($_POST);
+    writeDiary('');
 });
 
 $app->run();

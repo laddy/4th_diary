@@ -28,14 +28,14 @@
       >
         <span class="sr-only">Toggle navigation</span>
         <span class="icon-bar"><a href="/">Home</a></li>
-        <span class="icon-bar js_write">書く</span>
+        <span class="icon-bar js_write">Write</span>
       </button>
       <a class="navbar-brand" href="/">4 Line Diary</a>
     </div>
     <div id="navbar" class="collapse navbar-collapse">
       <ul class="nav navbar-nav">
         <li class="active"><a href="/">Home</a></li>
-        <li><a href="javascript:void(0);" class="js_write">書く</a></li>
+        <li><a href="javascript:void(0);" class="js_write">Write</a></li>
       </ul>
     </div><!--/.nav-collapse -->
   </div>
@@ -45,63 +45,60 @@
 <div class="container">
 
 <div class="contents">
-    <b>日記表示月:</b> <input type="month" id="js_select_month">
-    <button id="js_select_button" class="btn">表示</button>
+  <b>表示月:</b> <input type="month" id="js_select_month" value="<?=date('Y-m');?>">
+  <button id="js_select_button" class="btn">表示</button>
 </div>
 
 <div class="contents">
 
-<div id="write_diary_form">
+  <div id="write_diary_form">
 
-<form method="post" action="/write/" role="form" id="js_diary_form" class="form-horizontal hide">
-  <h2>Write</h2>
+  <form method="post" action="/write/" role="form" id="js_diary_form" class="form-horizontal hide">
+    <h2>Write</h2>
 
-  <div class="form-group">
-    <label for="inputSelectDate" class="col-sm-1 control-label">日付</label>
-    <div class="col-sm-4">
-      <input type="date" class="form-control" id="inputSelectDate" placeholder="2014-03-11" value="<?=date('Y-m-d');?>">
+    <div class="form-group">
+      <label for="inputSelectDate" class="col-sm-1 control-label">日付</label>
+      <div class="col-sm-4">
+        <input type="date" name="selectDate" class="form-control" id="inputSelectDate" placeholder="2014-03-11" value="<?=date('Y-m-d');?>">
+      </div>
     </div>
-  </div>
 
-  <div class="form-group">
-    <label for="inputFact" class="col-sm-1 control-label">事実</label>
-    <div class="col-sm-10">
-      <input type="text" class="form-control" id="inputFact" placeholder="事実">
+    <div class="form-group">
+      <label for="inputFact" class="col-sm-1 control-label">事実</label>
+      <div class="col-sm-10">
+        <input type="text" name="fact" class="form-control" id="inputFact" placeholder="事実">
+      </div>
     </div>
-  </div>
-  <div class="form-group">
-    <label for="inputDiscover" class="col-sm-1 control-label">発見</label>
-    <div class="col-sm-10">
-      <input type="text" class="form-control" id="inputDiscover" placeholder="発見">
+    <div class="form-group">
+      <label for="inputDiscover" class="col-sm-1 control-label">発見</label>
+      <div class="col-sm-10">
+        <input type="text" name="discover" class="form-control" id="inputDiscover" placeholder="発見">
+      </div>
     </div>
-  </div>
-  <div class="form-group">
-    <label for="inputLesson" class="col-sm-1 control-label">教訓</label>
-    <div class="col-sm-10">
-      <input type="text" class="form-control" id="inputLesson" placeholder="教訓">
+    <div class="form-group">
+      <label for="inputLesson" class="col-sm-1 control-label">教訓</label>
+      <div class="col-sm-10">
+        <input type="text" name="lesson" class="form-control" id="inputLesson" placeholder="教訓">
+      </div>
     </div>
-  </div>
-  <div class="form-group">
-    <label for="inputDeclaration" class="col-sm-1 control-label">宣言</label>
-    <div class="col-sm-10">
-      <input type="text" class="form-control" id="inputDeclaration" placeholder="宣言">
+    <div class="form-group">
+      <label for="inputDeclaration" class="col-sm-1 control-label">宣言</label>
+      <div class="col-sm-10">
+        <input type="text" name="declaration" class="form-control" id="inputDeclaration" placeholder="宣言">
+      </div>
     </div>
-  </div>
-  <div class="col-sm-offset-1 col-sm-10">
-    <button type="submit" class="btn btn-default">Submit</button>
-  </div>
-</form>
+    <div class="col-sm-offset-1 col-sm-10">
+      <button type="submit" class="btn btn-default">Submit</button>
+    </div>
+  </form>
 
-</div>
+  </div>
 
 </div>
 
 
 <div class="contents">
-
-<div id="diary_space"></div>
-
-
+  <div id="diary_space"></div>
 </div><!-- /contents -->
 
 </div><!-- /container -->
