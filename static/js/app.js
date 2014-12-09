@@ -52,9 +52,7 @@ $(function(){
             url  : '/write/',
             data : $('#js_diary_form').serialize() 
         }).done(function(){
-
             getDiary($('#inputSelectDate').val().substr(0, 7));
-            console.log($('#inputSelectDate').val().substr(0, 7));
         });
 
         return false;

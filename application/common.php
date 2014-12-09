@@ -4,7 +4,7 @@
  * Common Function
  */
 
-//function to connect to MySQL using PDO
+// connect to MySQL using PDO
 function conn()
 {
     global $config;
@@ -16,3 +16,8 @@ function conn()
     return $db_conn;
 }
 
+// user name hmac
+function nameToHash()
+{
+    return hash_hmac( 'sha256', $_SESSION['username'], '4th_diary_key', false );
+}

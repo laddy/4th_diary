@@ -77,7 +77,7 @@ function getDayDiary()
     }
 
     $db          = conn();
-    $user_hash   = hash_hmac( 'sha256', $_SESSION['username'], '4th_diary_key', false );
+    $user_hash   = nameToHash();
 
     $result = $db->query('SELECT * FROM contents WHERE user = "'.$user_hash.'"
         AND target_date LIKE "' . $_POST['edit_date']. '"');
@@ -100,14 +100,50 @@ function getDayDiary()
 
 function writeDiary($post)
 {
-    var_dump($post);
-    /*
-    ["selectDate"]
-    ["fact"]
-    ["discover"]
-    ["lesson"]
-    ["declaration"]
-    */
+
+    $db        = conn();
+    $user_hash = nameTohash();
+
+    $post["selectDate"];
+    $result = $db->query('SELECT COUNT(*) FROM contents
+        WHERE user = "'.$user_hash.'"
+        AND target_date = "' . $post['selectDate']. '"');
+
+    // update
+    var_dump($result->fetchColumn());
+    exit();
+
+    if ( 1 === $result->fetchColumn() )
+    {
+        $update = $db->query('UPDATE users
+            SET `user` = "' . $user_hash . '",
+            SET `updated_at` = "' . date('Y-m-d H:i:s') . '",
+            SET `target_date` = "' . $post['selectDate'] . '",
+            SET `cnt_fact` = "' . $post["fact"] . '",
+            SET `cnt_discover` = "' . $post["discover"] . '",
+            SET `cnt_lesson` = "' . $post["lesson"] . '",
+            SET `cnt_declaration` = "'. $post["declaration"] . '",
+            WHERE user = "'.$user_hash . '" AND `target_date` = "' . $post['selectDate'].'"');
+    }
+    else
+    {
+        $insert = $db->query('INSERT INTO `users`
+            (`user`, `updated_at`, `created_at`,
+            `target_date`, `cnt_fact`, `cnt_discover`,
+            `cnt_lesson`, `cnt_declaration`)
+            VALUES(
+                $user_hash,
+                "'. date('Y-m-d H:i:s') . '",
+                "'. date('Y-m-d H:i:s') . '",
+                "'.$post['selectDate'].'",
+                "'.$post["fact"].'",
+                "'.$post["discover"].'",
+                "'.$post["lesson"].'",
+                "'.$post["declaration"].'"
+            )
+        ');
+
+    }
 
     return '';
 }
