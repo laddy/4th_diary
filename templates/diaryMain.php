@@ -113,12 +113,50 @@
 
 {{#diary}}
 <h3>{{day}}日 ({{js_day}})</h3>
+<div class="row">
+  <div class="col-xs-6">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <span class="glyphicon glyphicon-hand-right" aria-hidden="true"></span> 事実
+      </div>
+      <div class="panel-body">{{cnt_fact}}</div>
+    </div>
+  </div>
+  <div class="col-xs-6">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <span class="glyphicon glyphicon-search" aria-hidden="true"></span> 発見
+      </div>
+      <div class="panel-body">{{cnt_discover}}</div>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-xs-6">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> 教訓
+      </div>
+      <div class="panel-body">{{cnt_lesson}}</div>
+    </div>
+  </div>
+  <div class="col-xs-6">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <span class="glyphicon glyphicon-ok" aria-hidden="true"></span> 宣言
+      </div>
+      <div class="panel-body">{{cnt_declaration}}</div>
+    </div>
+  </div>
+</div>
+<!--
 <table class="table">
   <tr> <th>事実</th><td>{{cnt_fact}}</td> </tr>
   <tr> <th>発見</th><td>{{cnt_discover}}</td> </tr>
   <tr> <th>教訓</th><td>{{cnt_lesson}}</td> </tr>
   <tr> <th>宣言</th><td>{{cnt_declaration}}</td> </tr>
 </table>
+-->
 {{/diary}}
 </script>
 

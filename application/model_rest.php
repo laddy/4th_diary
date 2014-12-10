@@ -110,29 +110,27 @@ function writeDiary($post)
         AND target_date = "' . $post['selectDate']. '"');
 
     // update
-    var_dump($result->fetchColumn());
-    exit();
-
-    if ( 1 === $result->fetchColumn() )
+    if ( '1' === $result->fetchColumn() )
     {
-        $update = $db->query('UPDATE users
+        $done = $db->query('UPDATE `contents`
             SET `user` = "' . $user_hash . '",
-            SET `updated_at` = "' . date('Y-m-d H:i:s') . '",
-            SET `target_date` = "' . $post['selectDate'] . '",
-            SET `cnt_fact` = "' . $post["fact"] . '",
-            SET `cnt_discover` = "' . $post["discover"] . '",
-            SET `cnt_lesson` = "' . $post["lesson"] . '",
-            SET `cnt_declaration` = "'. $post["declaration"] . '",
-            WHERE user = "'.$user_hash . '" AND `target_date` = "' . $post['selectDate'].'"');
+            `updated_at` = "' . date('Y-m-d H:i:s') . '",
+            `target_date` = "' . $post['selectDate'] . '",
+            `cnt_fact` = "' . $post["fact"] . '",
+            `cnt_discover` = "' . $post["discover"] . '",
+            `cnt_lesson` = "' . $post["lesson"] . '",
+            `cnt_declaration` = "'. $post["declaration"] . '"
+            WHERE `user` = "'.$user_hash . '" AND `target_date` = "' . $post['selectDate'].'"');
     }
     else
     {
-        $insert = $db->query('INSERT INTO `users`
-            (`user`, `updated_at`, `created_at`,
+        $done = $db->query('INSERT INTO `contents`
+            (`id`, `user`, `updated_at`, `created_at`,
             `target_date`, `cnt_fact`, `cnt_discover`,
             `cnt_lesson`, `cnt_declaration`)
             VALUES(
-                $user_hash,
+                NULL,
+                "'.$user_hash.'",
                 "'. date('Y-m-d H:i:s') . '",
                 "'. date('Y-m-d H:i:s') . '",
                 "'.$post['selectDate'].'",
@@ -142,9 +140,9 @@ function writeDiary($post)
                 "'.$post["declaration"].'"
             )
         ');
-
     }
-
-    return '';
+   
+    return ( $done ) ? json_encode(['status' => 'ok']) : json_encode(['status' => 'ng']);
+    
 }
 
