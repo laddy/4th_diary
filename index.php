@@ -3,7 +3,7 @@ session_start();
 
 require 'vendor/autoload.php';
 require 'config.php';
-require 'application/common.php';
+// require 'application/common.php';
 require 'application/model_rest.php';
 
 $app = new \Slim\Slim([
@@ -11,16 +11,17 @@ $app = new \Slim\Slim([
     'debug'       => $config['debug']
 ]);
 
-
 // Config
 $app->config([]);
+
+$diaryClass = new diary($config);
 
 $app->get('/', function() use($app) {
     $app->render('top.php');
 });
 
-$app->post('/auth/login/', function() use($app) {
-    if ( auth($_POST) ) {
+$app->post('/auth/login/', function() use($app, $diaryClass) {
+    if ( $diaryClass->auth($_POST) ) {
         $app->redirect('/diary/');
     }
     else {
@@ -30,9 +31,9 @@ $app->post('/auth/login/', function() use($app) {
 
 
 // Diary初期表示
-$app->get('/diary/', function() use($app) {
+$app->get('/diary/', function() use($app, $diaryClass) {
     $target_month = !empty($_POST['target_month']) ? htmlspecialchars($_POST['target_month']) : date('Y-m');
-    $contents     = getDiary($target_month);
+    $contents     = $diaryClass->getDiary($target_month);
     $app->render('diaryMain.php');
 });
 
@@ -40,9 +41,9 @@ $app->get('/diary/', function() use($app) {
  * data
  * return json
  */
-$app->post('/get_diary/', function() {
+$app->post('/get_diary/', function() use($diaryClass) {
     $target_month = !empty($_POST['target_month']) ? htmlspecialchars($_POST['target_month']) : date('Y-m');
-    $contents     = getDiary($target_month);
+    $contents     = $diaryClass->getDiary($target_month);
     echo json_encode($contents);
 });
 
@@ -50,15 +51,15 @@ $app->post('/get_diary/', function() {
 /*
  * GetDayDiary
  */
-$app->post('/getDayDiary/', function() {
-    $contents = getDayDiary();
+$app->post('/getDayDiary/', function() use($diaryClass) {
+    $contents = $diaryClass->getDayDiary();
     echo json_encode($contents);
 });
 /*
  * Write Data
  */
-$app->post('/write/', function() use($app) {
-    echo json_encode(writeDiary($_POST));
+$app->post('/write/', function() use($app, $diaryClass) {
+    echo json_encode($diaryClass->writeDiary($_POST));
 });
 
 $app->run();

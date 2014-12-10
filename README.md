@@ -1,4 +1,4 @@
-# 4th_diary
+# 4_diary
 
 * PHP 5.3 or greater
 * MySQL 5 or greater
@@ -31,6 +31,11 @@ $ curl -s https://getcomposer.org/installer | php
 $ ./composer.phar install
 ```
 
+### Data Import
+
+    $ mysql 4th_diary < database.sql
+    $ mysql 4th_diary < insert.sql
+
 ## Run
 
 ### PHP Build In Web Server
@@ -39,15 +44,9 @@ $ ./composer.phar install
 $ php -S localhost:9000
 ```
 
-### nginx
-
-
-### apache
-
-
 
 # License
 
-4th_diary the MIT license.
+4_diary the MIT license.
 
 
